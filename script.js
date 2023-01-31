@@ -14,6 +14,8 @@ const multiply = document.getElementById("multiply");
 const divide = document.getElementById("divide");
 
 const elements = [];
+const expression = [];
+
 elements.push(num1);
 elements.push(num2);
 elements.push(num3);
@@ -35,6 +37,78 @@ for(let i = 0;i<elements.length;i++){
     });
 }
 
+outputBox.innerText = ConvertToPostfix("( 1 + 2 ) * 3");
+
 function append(value){
     outputBox.innerText += value;
+}
+
+function checkOperatorPriority(op)
+{
+    switch (op)
+    {
+        case '*': return 2;
+        case '/': return 2;
+        case '+': return 1;
+        case '-': return 1;
+    }
+
+    return 0;
+}
+
+function isOperator(op) {
+    if (op == '+' || op == '-' ||
+        op == '^' || op == '*' ||
+        op == '/' || op == '(' ||
+        op == ')') {
+        return true;
+    }
+    else
+        return false;
+}
+
+function ConvertToPostfix(infixExpression)
+{
+    let stack = [];
+    let postfixExpression = [];
+
+    for (let i = 0; i < infixExpression.length; i++)
+    {
+        if(isOperator(infixExpression[i])){
+            if (infixExpression[i] == '(')
+            {
+                stack.push(infixExpression[i]);
+            }
+            else if (infixExpression[i] == ')')
+            {
+                while (stack.length > 0 && stack[stack.length-1] != '(')
+                {
+                    postfixExpression.push(stack.pop());
+                }
+    
+                stack.pop();
+            }
+            else
+            {
+                while (stack.length > 0 && checkOperatorPriority(stack[stack.length-1]) >= checkOperatorPriority(infixExpression[i]))
+                {
+                    postfixExpression.push(stack.pop());
+                }
+    
+                stack.push(infixExpression[i]);
+            }
+        }
+        else
+        {
+            postfixExpression.push(infixExpression[i]);
+        }
+        
+    }
+
+    while (stack.length > 0)
+    {
+        postfixExpression.push(stack.pop());
+    }
+
+    return postfixExpression.join("");
 }
