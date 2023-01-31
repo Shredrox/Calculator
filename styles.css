@@ -60,7 +60,7 @@ body {
 .grid-container{
     display:grid;
     grid-template-columns: repeat(4, 1fr);
-    grid-template-rows: repeat(5, 1fr);
+    grid-template-rows: repeat(6, 1fr);
     gap: 20px;
 }
 
@@ -149,12 +149,22 @@ body {
 }
 
 .grid-item-equals{
-    grid-row: 5;
-    grid-column: 3;
+    grid-row: 6;
+    grid-column: 4;
 }
 
 .grid-item-del{
+    grid-row: 6;
+    grid-column: 3;
+    font-size: 1.3rem;
+}
+
+.grid-item-open-par{
     grid-row: 5;
     grid-column: 2;
-    font-size: 1.3rem;
+}
+
+.grid-item-close-par{
+    grid-row: 5;
+    grid-column: 3;
 }

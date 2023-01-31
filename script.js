@@ -12,9 +12,11 @@ const plus = document.getElementById("plus");
 const minus = document.getElementById("minus");
 const multiply = document.getElementById("multiply");
 const divide = document.getElementById("divide");
+const equals = document.getElementById("equals");
+const openPar = document.getElementById("open-par");
+const closePar = document.getElementById("close-par");
 
 const elements = [];
-const expression = [];
 
 elements.push(num1);
 elements.push(num2);
@@ -29,7 +31,8 @@ elements.push(plus);
 elements.push(minus);
 elements.push(multiply);
 elements.push(divide);
-
+elements.push(openPar);
+elements.push(closePar);
 
 for(let i = 0;i<elements.length;i++){
     elements[i].addEventListener("click", () =>{
@@ -37,7 +40,9 @@ for(let i = 0;i<elements.length;i++){
     });
 }
 
-outputBox.innerText = ConvertToPostfix("( 1 + 2 ) * 3");
+equals.addEventListener("click", () =>{
+    outputBox.innerText = convertToPostfix(outputBox.innerText);
+})
 
 function append(value){
     outputBox.innerText += value;
@@ -67,7 +72,7 @@ function isOperator(op) {
         return false;
 }
 
-function ConvertToPostfix(infixExpression)
+function convertToPostfix(infixExpression)
 {
     let stack = [];
     let postfixExpression = [];
