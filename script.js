@@ -15,6 +15,7 @@ const divide = document.getElementById("divide");
 const equals = document.getElementById("equals");
 const openPar = document.getElementById("open-par");
 const closePar = document.getElementById("close-par");
+const del = document.getElementById("del");
 
 const elements = [];
 
@@ -42,6 +43,10 @@ for(let i = 0;i<elements.length;i++){
 
 equals.addEventListener("click", () =>{
     outputBox.innerText = convertToPostfix(outputBox.innerText);
+})
+
+del.addEventListener("click", () =>{
+    outputBox.innerText = removeLast(outputBox.innerText);
 })
 
 function append(value){
@@ -116,4 +121,19 @@ function convertToPostfix(infixExpression)
     }
 
     return postfixExpression.join("");
+}
+
+function removeLast(expression){
+    let result = [];
+    for(let i = 0;i<expression.length;i++){
+        if(expression[i] == " "){
+            continue;
+        }
+
+        result.push(expression[i]);
+    }
+
+    result.pop();
+
+    return result.join("");
 }
