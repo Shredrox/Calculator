@@ -62,9 +62,21 @@ del.addEventListener("click", () =>{
 })
 
 function append(value){
+
+    let isNotValidInput = (outputBox.innerText[outputBox.innerText.length-1] == "^"
+    || outputBox.innerText[outputBox.innerText.length-1] == "+"
+    || outputBox.innerText[outputBox.innerText.length-1] == "-"
+    || outputBox.innerText[outputBox.innerText.length-1] == "*"
+    || outputBox.innerText[outputBox.innerText.length-1] == "/")
+    && (value == "^" ||value == "/" || value == "+" || value == "-"
+    || value == "*" || value == "/");
+
     if(finishedEval){
         outputBox.innerText = "";
         finishedEval = false;
+    }
+    if(isNotValidInput){
+        outputBox.innerText = removeLast(outputBox.innerText);
     }
 
     outputBox.innerText += value;
