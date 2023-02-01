@@ -68,6 +68,7 @@ body {
 }
 
 .grid-item{
+    user-select: none;
     color: #2E4750;
     font-family: 'Courier New', Courier, monospace;
     font-weight: 600;
@@ -165,8 +166,7 @@ body {
 
 .grid-item-del{
     grid-row: 6;
-    grid-column-start: 1;
-    grid-column-end: span 3;
+    grid-column: 3;
     font-size: 1.3rem;
     width: 100%;
     padding: 0;
@@ -181,4 +181,15 @@ body {
 .grid-item-close-par{
     grid-row: 5;
     grid-column: 3;
+}
+
+.grid-item-dot{
+    grid-row: 6;
+    grid-column: 1;
+}
+
+.grid-item-power{
+    grid-row: 6;
+    grid-column: 2;
+    font-size: 1.5rem;
 }

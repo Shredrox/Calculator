@@ -16,6 +16,8 @@ const equals = document.getElementById("equals");
 const openPar = document.getElementById("open-par");
 const closePar = document.getElementById("close-par");
 const del = document.getElementById("del");
+const dot = document.getElementById("dot");
+const power = document.getElementById("power");
 
 let finishedEval = false;
 
@@ -36,6 +38,8 @@ elements.push(multiply);
 elements.push(divide);
 elements.push(openPar);
 elements.push(closePar);
+elements.push(dot);
+elements.push(power);
 
 for(let i = 0;i<elements.length;i++){
     elements[i].addEventListener("click", () =>{
@@ -70,6 +74,7 @@ function checkOperatorPriority(op)
 {
     switch (op)
     {
+        case '^': return 3;
         case '*': return 2;
         case '/': return 2;
         case '+': return 1;
@@ -174,7 +179,7 @@ function evaluate(root)
 
     if (root.left === null && root.right === null)
     {
-        return parseInt(root.value);
+        return parseFloat(root.value);
     }
 
     let left = evaluate(root.left);
@@ -182,6 +187,7 @@ function evaluate(root)
 
     switch (root.value)
     {
+        case "^": return Math.pow(left,right);
         case "+": return left + right;
         case "-": return left - right;
         case "*": return left * right;
@@ -197,7 +203,7 @@ function createTree(tokens)
     for (let i = 0; i < tokens.length; i++)
     {
         let temp = "";
-        while(tokens[i] != "@" && !["+","-","*","/"].includes(tokens[i])){
+        while(tokens[i] != "@" && !["+","-","*","/","^"].includes(tokens[i])){
             temp += tokens[i];
             i++;
         }
@@ -209,7 +215,7 @@ function createTree(tokens)
             node.value = tokens[i];
         }
 
-        if(["+","-","*","/"].includes(tokens[i])){
+        if(["+","-","*","/","^"].includes(tokens[i])){
             node.right = nodes.pop();
             node.left = nodes.pop();
         }
