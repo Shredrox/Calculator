@@ -17,6 +17,8 @@ const openPar = document.getElementById("open-par");
 const closePar = document.getElementById("close-par");
 const del = document.getElementById("del");
 
+let finishedEval = false;
+
 const elements = [];
 
 elements.push(num1);
@@ -48,6 +50,7 @@ equals.addEventListener("click", () =>{
     let result = evaluate(tree);
 
     outputBox.innerText = result;
+    finishedEval = true;
 })
 
 del.addEventListener("click", () =>{
@@ -55,6 +58,11 @@ del.addEventListener("click", () =>{
 })
 
 function append(value){
+    if(finishedEval){
+        outputBox.innerText = "";
+        finishedEval = false;
+    }
+
     outputBox.innerText += value;
 }
 
@@ -115,7 +123,12 @@ function convertToPostfix(infixExpression)
         }
         else
         {
-            postfixExpression.push(infixExpression[i]);
+            while(!isOperator(infixExpression[i]) && i < infixExpression.length){
+                postfixExpression.push(infixExpression[i]);
+                i++;
+            }
+            postfixExpression.push("@");
+            i--;
         }
         
     }
@@ -183,7 +196,18 @@ function createTree(tokens)
 
     for (let i = 0; i < tokens.length; i++)
     {
-        const node = new Node(tokens[i]);
+        let temp = "";
+        while(tokens[i] != "@" && !["+","-","*","/"].includes(tokens[i])){
+            temp += tokens[i];
+            i++;
+        }
+        const node = new Node();
+        if(temp !== ""){
+            node.value = temp;
+        }
+        else{
+            node.value = tokens[i];
+        }
 
         if(["+","-","*","/"].includes(tokens[i])){
             node.right = nodes.pop();
