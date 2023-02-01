@@ -165,8 +165,9 @@ body {
 }
 
 .grid-item-del{
-    grid-row: 6;
-    grid-column: 3;
+    grid-row: 7;
+    grid-column: 2;
+    grid-column-end: span 3;
     font-size: 1.3rem;
     width: 100%;
     padding: 0;
@@ -201,7 +202,7 @@ body {
 }
 
 .grid-item-root{
-    grid-row: 7;
-    grid-column: 2;
+    grid-row: 6;
+    grid-column: 3;
     font-size: 1.5rem;
 }
