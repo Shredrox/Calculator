@@ -18,6 +18,8 @@ const closePar = document.getElementById("close-par");
 const del = document.getElementById("del");
 const dot = document.getElementById("dot");
 const power = document.getElementById("power");
+const clear = document.getElementById("clear");
+const root = document.getElementById("root");
 
 let finishedEval = false;
 
@@ -40,6 +42,7 @@ elements.push(openPar);
 elements.push(closePar);
 elements.push(dot);
 elements.push(power);
+elements.push(root);
 
 for(let i = 0;i<elements.length;i++){
     elements[i].addEventListener("click", () =>{
@@ -59,6 +62,10 @@ equals.addEventListener("click", () =>{
 
 del.addEventListener("click", () =>{
     outputBox.innerText = removeLast(outputBox.innerText);
+})
+
+clear.addEventListener("click", () =>{
+    clearOutput();
 })
 
 function append(value){
@@ -82,11 +89,16 @@ function append(value){
     outputBox.innerText += value;
 }
 
+function clearOutput(){
+    outputBox.innerText = "";
+}
+
 function checkOperatorPriority(op)
 {
     switch (op)
     {
         case '^': return 3;
+        case '√': return 3;
         case '*': return 2;
         case '/': return 2;
         case '+': return 1;
@@ -100,7 +112,7 @@ function isOperator(op) {
     if (op == '+' || op == '-' ||
         op == '^' || op == '*' ||
         op == '/' || op == '(' ||
-        op == ')') {
+        op == ')' || op == '√') {
         return true;
     }
     else
@@ -200,6 +212,7 @@ function evaluate(root)
     switch (root.value)
     {
         case "^": return Math.pow(left,right);
+        case "√": return Math.sqrt(left);
         case "+": return left + right;
         case "-": return left - right;
         case "*": return left * right;
@@ -215,7 +228,7 @@ function createTree(tokens)
     for (let i = 0; i < tokens.length; i++)
     {
         let temp = "";
-        while(tokens[i] != "@" && !["+","-","*","/","^"].includes(tokens[i])){
+        while(tokens[i] != "@" && !["+","-","*","/","^","√"].includes(tokens[i])){
             temp += tokens[i];
             i++;
         }
@@ -230,6 +243,10 @@ function createTree(tokens)
         if(["+","-","*","/","^"].includes(tokens[i])){
             node.right = nodes.pop();
             node.left = nodes.pop();
+        }
+        else if(tokens[i] === "√"){
+            node.left = nodes.pop();
+            node.right = null;
         }
 
         nodes.push(node);
