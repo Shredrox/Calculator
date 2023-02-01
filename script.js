@@ -42,7 +42,12 @@ for(let i = 0;i<elements.length;i++){
 }
 
 equals.addEventListener("click", () =>{
-    outputBox.innerText = convertToPostfix(outputBox.innerText);
+
+    let postfixExp = convertToPostfix(outputBox.innerText);
+    let tree = createTree(postfixExp);
+    let result = evaluate(tree);
+
+    outputBox.innerText = result;
 })
 
 del.addEventListener("click", () =>{
@@ -136,4 +141,57 @@ function removeLast(expression){
     result.pop();
 
     return result.join("");
+}
+
+class Node{
+    constructor(value)
+    {
+        this.value = value;
+        this.left = null;
+        this.right = null;
+    }
+}
+
+function evaluate(root)
+{
+    if (root === null)
+    {
+        return 0;
+    }
+
+    if (root.left === null && root.right === null)
+    {
+        return parseInt(root.value);
+    }
+
+    let left = evaluate(root.left);
+    let right = evaluate(root.right);
+
+    switch (root.value)
+    {
+        case "+": return left + right;
+        case "-": return left - right;
+        case "*": return left * right;
+        case "/": return left / right;
+        default: return 0;
+    }
+}
+
+function createTree(tokens)
+{
+    let nodes = [];
+
+    for (let i = 0; i < tokens.length; i++)
+    {
+        const node = new Node(tokens[i]);
+
+        if(["+","-","*","/"].includes(tokens[i])){
+            node.right = nodes.pop();
+            node.left = nodes.pop();
+        }
+
+        nodes.push(node);
+    }
+
+    return nodes.pop();
 }
