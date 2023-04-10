@@ -1,4 +1,5 @@
 const outputBox = document.getElementById("output");
+const num0 = document.getElementById("num0");
 const num1 = document.getElementById("num1");
 const num2 = document.getElementById("num2");
 const num3 = document.getElementById("num3");
@@ -25,6 +26,7 @@ let finishedEval = false;
 
 const elements = [];
 
+elements.push(num0);
 elements.push(num1);
 elements.push(num2);
 elements.push(num3);
